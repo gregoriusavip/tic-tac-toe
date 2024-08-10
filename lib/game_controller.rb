@@ -33,7 +33,7 @@ class GameController
     position = Integer(gets, exception: false)
     until position && BOARD.empty_at?(position)
       puts "Invalid position. Player #{player.name}'s move:"
-      position = gets
+      position = Integer(gets, exception: false)
     end
     GameController::BOARD.update_board(player, position)
   end
