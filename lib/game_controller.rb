@@ -6,21 +6,22 @@ require_relative('utility')
 
 # Control the game's logic and loop
 class GameController
-  def start
+  def start # rubocop:disable Metrics/MethodLength
     turn = 0
     winner = nil
     loop do
       GameController::BOARD.display_board
+      puts "\n"
       move(GameController::PLAYERS[turn % 2])
       turn += 1
       winner = find_winner
       break if winner
     end
-    update_score(winner) unless winner == :draw
+    end_game(winner)
   end
 
   def display_score
-    puts "SCORE #{PLAYERS[0]}: #{PLAYERS[0].score} to #{PLAYERS[1]}: #{PLAYERS[1].score}"
+    puts "SCORE [#{PLAYERS[0].name}: #{PLAYERS[0].score}] to [#{PLAYERS[1].name}: #{PLAYERS[1].score}]"
   end
 
   private
@@ -29,13 +30,14 @@ class GameController
   BOARD = Board.new
 
   def move(player)
-    puts "Player #{player.name}'s move: (0-9)"
+    puts "Player #{player.name}'s move: (1-9)"
     position = Integer(gets, exception: false)
-    until position && BOARD.empty_at?(position)
+    until position && BOARD.empty_at?(position - 1)
       puts "Invalid position. Player #{player.name}'s move:"
       position = Integer(gets, exception: false)
     end
-    GameController::BOARD.update_board(player, position)
+    puts "\n"
+    GameController::BOARD.update_board(player, position - 1)
   end
 
   def find_winner
@@ -51,5 +53,16 @@ class GameController
 
   def update_score(player)
     player.score += 1
+  end
+
+  def end_game(winner)
+    GameController::BOARD.display_board
+    puts "\n"
+    if winner == :draw
+      puts 'Its a tie!'
+    else
+      puts "The winner is: #{winner.name}!"
+      update_score(winner)
+    end
   end
 end
