@@ -10,9 +10,9 @@ class GameController
     turn = 0
     winner = nil
     loop do
-      GameController::BOARD.display_board
+      BOARD.display_board
       puts "\n"
-      move(GameController::PLAYERS[turn % 2])
+      move(PLAYERS[turn % 2])
       turn += 1
       winner = find_winner
       break if winner
@@ -37,14 +37,14 @@ class GameController
       position = Integer(gets, exception: false)
     end
     puts "\n"
-    GameController::BOARD.update_board(player, position - 1)
+    BOARD.update_board(player, position - 1)
   end
 
   def find_winner
-    winner = Utility.uniq_2d_array(GameController::BOARD.all_horizontal) ||
-             Utility.uniq_2d_array(GameController::BOARD.all_vertical) ||
-             Utility.uniq_2d_array(GameController::BOARD.all_cross)
-    if GameController::BOARD.length == 9
+    winner = Utility.uniq_2d_array(BOARD.all_horizontal) ||
+             Utility.uniq_2d_array(BOARD.all_vertical) ||
+             Utility.uniq_2d_array(BOARD.all_cross)
+    if BOARD.length == 9
       winner.nil? ? :draw : winner
     else
       winner
@@ -56,7 +56,7 @@ class GameController
   end
 
   def end_game(winner)
-    GameController::BOARD.display_board
+    BOARD.display_board
     puts "\n"
     if winner == :draw
       puts 'Its a tie!'
