@@ -16,6 +16,11 @@ class GameController
       winner = find_winner
       break if winner
     end
+    update_score(winner) unless winner == :draw
+  end
+
+  def display_score
+    puts "SCORE #{PLAYERS[0]}: #{PLAYERS[0].score} to #{PLAYERS[1]}: #{PLAYERS[1].score}"
   end
 
   private
@@ -42,5 +47,9 @@ class GameController
     else
       winner
     end
+  end
+
+  def update_score(player)
+    player.score += 1
   end
 end
