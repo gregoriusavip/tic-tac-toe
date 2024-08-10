@@ -2,6 +2,7 @@
 
 require_relative('player')
 require_relative('game_board')
+require_relative('utility')
 
 # Control the game's logic and loop
 class GameController
@@ -33,20 +34,13 @@ class GameController
   end
 
   def find_winner
-    winner = uniq_2d_array(GameController::BOARD.all_horizontal) ||
-             uniq_2d_array(GameController::BOARD.all_vertical) ||
-             uniq_2d_array(GameController::BOARD.all_cross)
+    winner = Utility.uniq_2d_array(GameController::BOARD.all_horizontal) ||
+             Utility.uniq_2d_array(GameController::BOARD.all_vertical) ||
+             Utility.uniq_2d_array(GameController::BOARD.all_cross)
     if GameController::BOARD.length == 9
       winner.nil? ? :draw : winner
     else
       winner
     end
   end
-end
-
-def uniq_2d_array(array)
-  array.each do |i|
-    return i[0] if i.uniq.length == 1 && !i.nil?
-  end
-  nil
 end
