@@ -35,7 +35,7 @@ class GameController
   def move(player)
     puts "Player #{player.name}'s move: (1-9)"
     position = Integer(gets, exception: false)
-    until position && @board.empty_at?(position - 1)
+    until position && (position - 1) >= 0 && @board.empty_at?(position - 1)
       puts "Invalid position. Player #{player.name}'s move:"
       position = Integer(gets, exception: false)
     end
