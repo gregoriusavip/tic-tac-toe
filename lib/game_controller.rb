@@ -67,5 +67,6 @@ class GameController
       puts "The winner is: #{winner.name}!"
       update_score(winner)
     end
+    @board = Board.new
   end
 end
