@@ -32,14 +32,14 @@ describe Board do
     let(:player_one) { instance_double(Player) }
 
     context 'when a position is empty' do
-      it 'return true' do
+      it 'returns true' do
         position = 3
         expect(filled_board).to be_empty_at(position)
       end
     end
 
     context 'when a position is not empty' do
-      it 'return false' do
+      it 'returns false' do
         position = 3
         filled_board.update_board(player_one, position)
         expect(filled_board).not_to be_empty_at(position)
