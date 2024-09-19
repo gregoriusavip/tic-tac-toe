@@ -46,4 +46,52 @@ describe Board do
       end
     end
   end
+
+  describe '#all_horizontal' do
+    subject(:horizontal_board) { described_class.new }
+
+    let(:player_one) { instance_double(Player) }
+
+    context 'when the board is filled' do
+      it 'returns the correct horizontal sequence' do
+        horizontal_sequence = [[player_one, nil, nil], [nil, player_one, nil], [nil, nil, player_one]]
+        horizontal_board.update_board(player_one, 0)
+        horizontal_board.update_board(player_one, 4)
+        horizontal_board.update_board(player_one, 8)
+        expect(horizontal_board.all_horizontal).to eq(horizontal_sequence)
+      end
+    end
+  end
+
+  describe '#all_vertical' do
+    subject(:vertical_board) { described_class.new }
+
+    let(:player_one) { instance_double(Player) }
+
+    context 'when the board is filled' do
+      it 'returns the correct vertical sequence' do
+        vertical_sequence = [[player_one, player_one, nil], [nil, nil, nil], [nil, nil, player_one]]
+        vertical_board.update_board(player_one, 0)
+        vertical_board.update_board(player_one, 3)
+        vertical_board.update_board(player_one, 8)
+        expect(vertical_board.all_vertical).to eq(vertical_sequence)
+      end
+    end
+  end
+
+  describe '#all_cross' do
+    subject(:cross_board) { described_class.new }
+
+    let(:player_one) { instance_double(Player) }
+
+    context 'when the board is filled' do
+      it 'returns the correct cross sequence' do
+        cross_sequence = [[player_one, nil, player_one], [nil, nil, nil]]
+        cross_board.update_board(player_one, 0)
+        cross_board.update_board(player_one, 3)
+        cross_board.update_board(player_one, 8)
+        expect(cross_board.all_cross).to eq(cross_sequence)
+      end
+    end
+  end
 end
