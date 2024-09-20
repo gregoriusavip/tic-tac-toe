@@ -3,6 +3,7 @@
 require_relative '../lib/game_controller'
 require_relative '../lib/game_board'
 require_relative '../lib/player'
+require_relative '../lib/utility'
 
 describe GameController do
   # rubocop:disable RSpec/SubjectStub
@@ -41,6 +42,66 @@ describe GameController do
         allow(game_start).to receive(:find_winner).and_return(*move_returns)
         game_start.start
         expect(board).to have_received(:display_board).exactly(9).times
+      end
+    end
+
+    context 'when player_one fills the board horizontally' do
+      player_one = 'X'
+      before do
+        allow(board).to receive(:all_horizontal)
+        allow(board).to receive(:length)
+        allow(Utility).to receive(:uniq_2d_array).and_return(player_one)
+      end
+
+      it 'ends the game with player_one as the winner' do
+        game_start.start
+        expect(game_start).to have_received(:end_game).with(player_one).once
+      end
+    end
+
+    context 'when player_one fills the board vertically' do
+      player_one = 'X'
+      before do
+        allow(board).to receive(:all_horizontal)
+        allow(board).to receive(:all_vertical)
+        allow(board).to receive(:length)
+        allow(Utility).to receive(:uniq_2d_array).and_return(player_one)
+      end
+
+      it 'ends the game with player_one as the winner' do
+        game_start.start
+        expect(game_start).to have_received(:end_game).with(player_one).once
+      end
+    end
+
+    context 'when player_one wins fills the board diagonally' do
+      player_one = 'X'
+      before do
+        allow(board).to receive(:all_horizontal)
+        allow(board).to receive(:all_vertical)
+        allow(board).to receive(:all_cross)
+        allow(board).to receive(:length)
+        allow(Utility).to receive(:uniq_2d_array).and_return(player_one)
+      end
+
+      it 'ends the game with player_one as the winner' do
+        game_start.start
+        expect(game_start).to have_received(:end_game).with(player_one).once
+      end
+    end
+
+    context 'when 9 turns have passed and no winner has been found' do
+      before do
+        allow(board).to receive(:all_horizontal)
+        allow(board).to receive(:all_vertical)
+        allow(board).to receive(:all_cross)
+        allow(board).to receive(:length).and_return(9)
+        allow(Utility).to receive(:uniq_2d_array).and_return(nil)
+      end
+
+      it 'ends the game with a draw' do
+        game_start.start
+        expect(game_start).to have_received(:end_game).with(:draw).once
       end
     end
   end
