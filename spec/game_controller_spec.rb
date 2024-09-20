@@ -2,7 +2,6 @@
 
 require_relative '../lib/game_controller'
 require_relative '../lib/game_board'
-require_relative '../lib/player'
 require_relative '../lib/utility'
 
 describe GameController do
