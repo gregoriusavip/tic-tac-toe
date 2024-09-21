@@ -8,8 +8,8 @@ require_relative('utility')
 class GameController
   PLAYERS = [Player.new('X'), Player.new('O')].freeze
 
-  def initialize
-    @board = Board.new
+  def initialize(new_board = Board.new)
+    @board = new_board
   end
 
   def start # rubocop:disable Metrics/MethodLength
